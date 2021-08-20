@@ -10,11 +10,11 @@ Gem::Specification.new do |s|
   s.version     = SpreeWinbankPayment.version
   s.summary     = 'Add extension summary here'
   s.description = 'Add (optional) extension description here'
-  s.required_ruby_version = '>= 2.5'
+  s.required_ruby_version = '>= 2.7.3'
 
-  s.author    = 'You'
-  s.email     = 'you@example.com'
-  s.homepage  = 'https://github.com/your-github-handle/spree_winbank_payment'
+  s.author    = 'OlympusOne'
+  s.email     = 'dimidev@olympusone.com'
+  s.homepage  = 'https://github.com/olympusone/spree_winbank_payment'
   s.license = 'BSD-3-Clause'
 
   s.files       = `git ls-files`.split("\n").reject { |f| f.match(/^spec/) && !f.match(/^spec\/fixtures/) }
