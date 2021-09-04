@@ -61,7 +61,7 @@ module Spree
                             result_timestamp = body.match(/<Timestamp>(\S+)<\/Timestamp>/)
                             
                             if result_code && result_code[1].to_i == 0
-                                payment.winbank_payment.create!(
+                                payment.winbank_payments.create!(
                                     transaction_ticket: result_tran_ticket[1],
                                 )
                                 
