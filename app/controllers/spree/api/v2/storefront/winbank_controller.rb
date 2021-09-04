@@ -65,7 +65,7 @@ module Spree
                                 payment.winkbank_payment.transaction_ticket = result_tran_ticket[1]
                                 payment.save!
                                 
-                                render json: {code: result_code}
+                                render json: {code: result_code[1].to_i}
                             else
                                 render_error_payload(result_description[1])
                             end
