@@ -66,7 +66,7 @@ module Spree
                                     transaction_ticket: result_tran_ticket[1],
                                 )
                                 
-                                render json: {code: result_code[1].to_i)}
+                                render json: {code: result_code[1].to_i}
                             else
                                 render_error_payload(result_description[1])
                             end
@@ -76,7 +76,7 @@ module Spree
                     end
 
                     def update
-                        
+
                     end
                 end
             end
