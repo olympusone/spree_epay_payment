@@ -61,6 +61,10 @@ module Spree
                             result_timestamp = body.match(/<Timestamp>(\S+)<\/Timestamp>/)
                             
                             if result_code && result_code[1].to_i == 0
+                                payment.winkbank_payment || payment.build_winkbank_payment
+                                payment.winkbank_payment.transaction_ticket = result_tran_ticket[1]
+                                payment.save!
+                                
                                 render json: {code: result_code}
                             else
                                 render_error_payload(result_description[1])

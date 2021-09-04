@@ -1,6 +1,6 @@
 module Spree::PaymentDecorator
     def self.prepended(base)
-      base.has_many :winbank_payments, dependent: :destroy
+      base.has_one :winbank_payment, dependent: :destroy
     end
 end
   
