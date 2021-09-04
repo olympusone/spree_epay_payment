@@ -61,11 +61,11 @@ module Spree
                             result_timestamp = body.match(/<Timestamp>(\S+)<\/Timestamp>/)
                             
                             if result_code && result_code[1].to_i == 0
-                                payment.winbank_payment || payment.build_winbank_payment
-                                payment.winbank_payment.transaction_ticket = result_tran_ticket[1]
-                                payment.save!
+                                payment.winbank_payment.create!(
+                                    transaction_ticket: result_tran_ticket[1],
+                                )
                                 
-                                render json: {code: result_code[1].to_i}
+                                render json: {code: Digest::MD5.hexdigest(result_tran_ticket[1])}
                             else
                                 render_error_payload(result_description[1])
                             end
