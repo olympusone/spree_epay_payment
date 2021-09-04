@@ -7,8 +7,9 @@ module Spree
                     before_action :ensure_order
                     
                     def issueticket
-                        order = Spree::Order.find_by(number: params[:order_number])
-                        payment = order.payments.checkout.first
+                        spree_authorize! :update, spree_current_order, order_token
+
+                        payment = spree_current_order.payments.checkout.first
         
                         begin
                             raise 'There is no selected payment method' unless payment
@@ -25,27 +26,27 @@ module Spree
                             password = Digest::MD5.hexdigest(preferences[:password])
 
                             message = %Q[<?xml version="1.0" encoding="utf-8"?>
-                            <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-                            <soap12:Body>
-                                <IssueNewTicket xmlns="http://piraeusbank.gr/paycenter/redirection">
-                                <Request>
-                                    <Username>#{preferences[:user_name]}</Username>
-                                    <Password>#{password}</Password>
-                                    <MerchantId>#{preferences[:merchant_id]}</MerchantId>
-                                    <PosId>#{preferences[:pos_id]}</PosId>
-                                    <AcquirerId>#{preferences[:acquirer_id]}</AcquirerId>
-                                    <MerchantReference>#{payment.number}</MerchantReference>
-                                    <RequestType>02</RequestType>
-                                    <ExpirePreauth>0</ExpirePreauth>
-                                    <Amount>#{payment.amount}</Amount>
-                                    <CurrencyCode>978</CurrencyCode>
-                                    <Installments>0</Installments>
-                                    <Bnpl>0</Bnpl>
-                                    <Parameters></Parameters>
-                                </Request>
-                                </IssueNewTicket>
-                            </soap12:Body>
-                            </soap12:Envelope>]
+                                <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+                                <soap12:Body>
+                                    <IssueNewTicket xmlns="http://piraeusbank.gr/paycenter/redirection">
+                                    <Request>
+                                        <Username>#{preferences[:user_name]}</Username>
+                                        <Password>#{password}</Password>
+                                        <MerchantId>#{preferences[:merchant_id]}</MerchantId>
+                                        <PosId>#{preferences[:pos_id]}</PosId>
+                                        <AcquirerId>#{preferences[:acquirer_id]}</AcquirerId>
+                                        <MerchantReference>#{payment.number}</MerchantReference>
+                                        <RequestType>02</RequestType>
+                                        <ExpirePreauth>0</ExpirePreauth>
+                                        <Amount>#{payment.amount}</Amount>
+                                        <CurrencyCode>978</CurrencyCode>
+                                        <Installments>0</Installments>
+                                        <Bnpl>0</Bnpl>
+                                        <Parameters></Parameters>
+                                    </Request>
+                                    </IssueNewTicket>
+                                </soap12:Body>
+                                </soap12:Envelope>]
 
                             response = Net::HTTP.post(
                                 URI(url),
@@ -65,7 +66,7 @@ module Spree
                                     transaction_ticket: result_tran_ticket[1],
                                 )
                                 
-                                render json: {code: Digest::MD5.hexdigest(result_tran_ticket[1])}
+                                render json: {code: result_code[1].to_i)}
                             else
                                 render_error_payload(result_description[1])
                             end
