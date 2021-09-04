@@ -6,7 +6,7 @@ module Spree
                     include Spree::Api::V2::Storefront::OrderConcern
                     before_action :ensure_order
                     
-                    def issueticket
+                    def create
                         spree_authorize! :update, spree_current_order, order_token
 
                         payment = spree_current_order.payments.checkout.first
@@ -73,6 +73,10 @@ module Spree
                         rescue => exception
                             render_error_payload(exception.to_s)
                         end
+                    end
+
+                    def update
+                        
                     end
                 end
             end
