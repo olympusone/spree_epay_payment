@@ -62,11 +62,14 @@ module Spree
                             result_timestamp = body.match(/<Timestamp>(\S+)<\/Timestamp>/)
                             
                             if result_code && result_code[1].to_i == 0
+                                uuid = SecureRandom.uuid
+
                                 payment.winbank_payments.create!(
-                                    transaction_ticket: result_tran_ticket[1],
+                                    transaction_ticket: result_tran_ticket[1],,
+                                    uuid: uuid
                                 )
                                 
-                                render json: {code: result_code[1].to_i}
+                                render json: {code: uuid}
                             else
                                 render_error_payload(result_description[1])
                             end
@@ -76,11 +79,41 @@ module Spree
                     end
 
                     def failure
-                        render json: {ok: false}
+                        fields = winbank_payment_params
+
+                        winbank_payment = Spree::WinbankPayment.find_by(uuid: fileds[:merchant_reference])
+
+                        if winbank_payment.update(winbank_payment_params('failure'))
+                            render json: {ok: true}
+                        else
+                            render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
+                        end
                     end
 
                     def success
+                        fields = winbank_payment_params
+
+                        winbank_payment = Spree::WinbankPayment.find_by(uuid: fileds[:merchant_reference])
+
+                        if winbank_payment.update(winbank_payment_params('success'))
+                            render json: {ok: true}
+                        else
+                            render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
+                        end
+
                         render json: {ok: true}
+                    end
+
+                    private
+                    def winbank_payment_params(state)
+                        if state == 'success'
+                            params.require(:winbank_payment)
+                                .permit(:support_reference_id , :merchant_reference, :result_code, :result_description,
+                                        :status_flag, :approval_code, :package_no, :auth_status)
+                        else
+                            params.require(:winbank_payment)
+                                .permit(:support_reference_id , :merchant_reference, :result_code, :result_description)
+                        end
                     end
                 end
             end
