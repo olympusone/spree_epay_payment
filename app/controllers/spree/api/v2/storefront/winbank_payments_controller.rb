@@ -65,7 +65,7 @@ module Spree
                                 uuid = SecureRandom.uuid
 
                                 payment.winbank_payments.create!(
-                                    transaction_ticket: result_tran_ticket[1],,
+                                    transaction_ticket: result_tran_ticket[1],
                                     uuid: uuid
                                 )
                                 
