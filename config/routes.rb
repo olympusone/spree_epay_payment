@@ -3,8 +3,10 @@ Spree::Core::Engine.add_routes do
     namespace :v2 do
       namespace :storefront do
         resources :winbank_payments, only: [:create] do
-          post 'failure'
-          post 'success'
+          collection do
+            post 'failure'
+            post 'success'
+          end
         end
       end
     end
