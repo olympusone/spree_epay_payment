@@ -25,6 +25,8 @@ module Spree
 
                             password = Digest::MD5.hexdigest(preferences[:password])
 
+                            uuid = SecureRandom.uuid
+
                             message = %Q[<?xml version="1.0" encoding="utf-8"?>
                                 <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
                                 <soap12:Body>
@@ -42,7 +44,7 @@ module Spree
                                         <CurrencyCode>978</CurrencyCode>
                                         <Installments>0</Installments>
                                         <Bnpl>0</Bnpl>
-                                        <Parameters></Parameters>
+                                        <Parameters>code=#{uuid}</Parameters>
                                     </Request>
                                     </IssueNewTicket>
                                 </soap12:Body>
@@ -62,14 +64,12 @@ module Spree
                             result_timestamp = body.match(/<Timestamp>(\S+)<\/Timestamp>/)
                             
                             if result_code && result_code[1].to_i == 0
-                                uuid = SecureRandom.uuid
-
                                 payment.winbank_payments.create!(
                                     transaction_ticket: result_tran_ticket[1],
                                     uuid: uuid
                                 )
                                 
-                                render json: {code: uuid}
+                                render json: {code: result_code[1].to_i}
                             else
                                 render_error_payload(result_description[1])
                             end
