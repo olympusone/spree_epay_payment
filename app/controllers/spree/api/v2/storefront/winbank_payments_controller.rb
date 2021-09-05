@@ -2,7 +2,7 @@ module Spree
     module Api
         module V2
             module Storefront
-                class WinbankController < ::Spree::Api::V2::BaseController
+                class WinbankPaymentsController < ::Spree::Api::V2::BaseController
                     include Spree::Api::V2::Storefront::OrderConcern
                     before_action :ensure_order
                     
