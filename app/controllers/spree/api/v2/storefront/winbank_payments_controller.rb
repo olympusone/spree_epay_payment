@@ -4,7 +4,7 @@ module Spree
             module Storefront
                 class WinbankPaymentsController < ::Spree::Api::V2::BaseController
                     include Spree::Api::V2::Storefront::OrderConcern
-                    before_action :ensure_order
+                    before_action :ensure_order, only: :create
                     
                     def create
                         spree_authorize! :update, spree_current_order, order_token
@@ -75,8 +75,12 @@ module Spree
                         end
                     end
 
-                    def update
+                    def failure
+                        render json: {ok: false}
+                    end
 
+                    def success
+                        render json: {ok: true}
                     end
                 end
             end
