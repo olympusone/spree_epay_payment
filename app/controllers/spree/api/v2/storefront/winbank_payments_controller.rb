@@ -44,7 +44,7 @@ module Spree
                                         <CurrencyCode>978</CurrencyCode>
                                         <Installments>0</Installments>
                                         <Bnpl>0</Bnpl>
-                                        <Parameters>code=#{uuid}</Parameters>
+                                        <Parameters>#{uuid}</Parameters>
                                     </Request>
                                     </IssueNewTicket>
                                 </soap12:Body>
@@ -93,15 +93,13 @@ module Spree
                     def success
                         fields = winbank_payment_params
 
-                        winbank_payment = Spree::WinbankPayment.find_by(uuid: fileds[:merchant_reference])
+                        winbank_payment = Spree::WinbankPayment.find_by(uuid: fileds[:parameters])
 
                         if winbank_payment.update(winbank_payment_params('success'))
                             render json: {ok: true}
                         else
                             render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
                         end
-
-                        render json: {ok: true}
                     end
 
                     private
@@ -109,10 +107,10 @@ module Spree
                         if state == 'success'
                             params.require(:winbank_payment)
                                 .permit(:support_reference_id , :merchant_reference, :result_code, :result_description,
-                                        :status_flag, :approval_code, :package_no, :auth_status)
+                                        :status_flag, :approval_code, :package_no, :auth_status, :parameters)
                         else
                             params.require(:winbank_payment)
-                                .permit(:support_reference_id , :merchant_reference, :result_code, :result_description)
+                                .permit(:support_reference_id , :merchant_reference, :result_code, :result_description, :parameters))
                         end
                     end
                 end
