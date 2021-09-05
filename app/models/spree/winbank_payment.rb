@@ -1,8 +1,8 @@
 module Spree
     class WinbankPayment < Spree::Base
         validates :transaction_ticket, presence: true, uniqueness: {case_sensitive: false}
-        validates :support_reference_id, presence: true, uniqueness: {case_sensitive: false}
-        validates_presence_of :result_code, :result_description, :status_flag
+        validates :support_reference_id, presence: true, uniqueness: {case_sensitive: false}, on: :update
+        validates_presence_of :result_code, :result_description, :status_flag, on: :update
     
         belongs_to :payment
 
