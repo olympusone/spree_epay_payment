@@ -93,6 +93,8 @@ module Spree
                     def success
                         fields = winbank_payment_params('success')
 
+                        puts fields, params
+
                         winbank_payment = Spree::WinbankPayment.find_by(uuid: fileds[:parameters])
 
                         if winbank_payment.update(fields)
