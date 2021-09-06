@@ -15,7 +15,7 @@ module Spree
                         payment = spree_current_order.payments.failed.first unless payment
         
                         begin
-                            raise 'There is no selected payment method' unless payment
+                            raise 'There is no active payment method' unless payment
 
                             unless payment.payment_method.type === "Spree::PaymentMethod::WinbankPayment"
                                 raise 'Order has not WinbankPayment'
