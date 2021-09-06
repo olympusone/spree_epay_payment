@@ -84,6 +84,8 @@ module Spree
                         fields = params.require(:winbank_payment).permit!
 
                         winbank_payment = Spree::WinbankPayment.find_by(uuid: fields[:parameters])
+                        
+                        payment.failure
 
                         if winbank_payment.update(winbank_payment_params('failure'))
                             render json: {ok: true}
@@ -116,10 +118,16 @@ module Spree
                         secure_hash = OpenSSL::HMAC.hexdigest('SHA256', winbank_payment.transaction_ticket, hash_key)
 
                         if secure_hash.upcase != fields[:hash_key]
+                            payment.failure
+
                             render json: {ok: false, error: "Hash Key is not correct"}, status: 400
                         elsif winbank_payment.update(winbank_payment_params('success'))
+                            payment.complete
+
                             render json: {ok: true}
                         else
+                            payment.failure
+                            
                             render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
                         end
                     end
