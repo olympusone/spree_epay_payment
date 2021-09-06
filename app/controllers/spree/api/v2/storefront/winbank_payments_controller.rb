@@ -68,6 +68,8 @@ module Spree
                                     transaction_ticket: result_tran_ticket[1],
                                     uuid: uuid
                                 )
+
+                                payment.started_processing
                                 
                                 render json: {code: result_code[1].to_i}
                             else
