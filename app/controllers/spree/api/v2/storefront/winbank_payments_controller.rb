@@ -111,7 +111,7 @@ module Spree
                             winbank_payment[:status_flag],
                         ].join(';')
 
-                        secure_hash = OpenSSL::HMAC.hexdigest('SHA256', payment.transaction_ticket, hash_key)
+                        secure_hash = OpenSSL::HMAC.hexdigest('SHA256', winbank_payment.transaction_ticket, hash_key)
 
                         puts secure_hash.upcase, fields[:hash_key]
 
