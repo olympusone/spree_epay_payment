@@ -102,13 +102,13 @@ module Spree
                             preferences[:pos_id],
                             preferences[:acquirer_id],
                             payment.number,
-                            winbank_payment[:approval_code],
+                            fields[:approval_code],
                             fields[:parameters],
-                            winbank_payment[:response_code],
-                            winbank_payment[:support_reference_id],
-                            winbank_payment[:auth_status],
-                            winbank_payment[:package_no],
-                            winbank_payment[:status_flag],
+                            fields[:response_code],
+                            fields[:support_reference_id],
+                            fields[:auth_status],
+                            fields[:package_no],
+                            fields[:status_flag],
                         ].join(';')
 
                         secure_hash = OpenSSL::HMAC.hexdigest('SHA256', winbank_payment.transaction_ticket, hash_key)
