@@ -98,7 +98,7 @@ module Spree
                         preferences = payment.payment_method.preferences
 
                         hash_key = [
-                            payment.transaction_ticket,
+                            winbank_payment.transaction_ticket,
                             preferences[:pos_id],
                             preferences[:acquirer_id],
                             payment.number,
