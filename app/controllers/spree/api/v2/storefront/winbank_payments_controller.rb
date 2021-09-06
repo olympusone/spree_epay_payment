@@ -111,7 +111,7 @@ module Spree
                         if state == 'success'
                             params.require(:winbank_payment)
                                 .permit(:support_reference_id , :merchant_reference, :result_code, :result_description,
-                                        :status_flag, :approval_code, :package_no, :auth_status)
+                                        :status_flag, :approval_code, :package_no, :auth_status, :transaction_id)
                         else
                             params.require(:winbank_payment)
                                 .permit(:support_reference_id , :merchant_reference, :result_code, :result_description)
