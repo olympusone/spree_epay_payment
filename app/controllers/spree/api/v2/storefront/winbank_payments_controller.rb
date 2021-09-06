@@ -91,9 +91,9 @@ module Spree
                     end
 
                     def success
-                        # fields = winbank_payment_params('success')
+                        fields = winbank_payment_params('success')
 
-                        puts params.require(:winbank_payment), params.require('winbank_payment')
+                        puts 'fields', fields
 
                         # winbank_payment = Spree::WinbankPayment.find_by(uuid: fileds[:parameters])
 
