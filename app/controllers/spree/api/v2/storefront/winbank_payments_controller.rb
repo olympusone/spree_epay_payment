@@ -93,15 +93,13 @@ module Spree
                     def success
                         fields = winbank_payment_params('success')
 
-                        puts 'fields', fields, fields[:parameters]
+                        winbank_payment = Spree::WinbankPayment.find_by(uuid: fields[:parameters])
 
-                        # winbank_payment = Spree::WinbankPayment.find_by(uuid: fileds[:parameters])
-
-                        # if winbank_payment.update(fields)
+                        if winbank_payment.update(fields)
                             render json: {ok: true}
-                        # else
-                        #     render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
-                        # end
+                        else
+                            render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
+                        end
                     end
 
                     private
