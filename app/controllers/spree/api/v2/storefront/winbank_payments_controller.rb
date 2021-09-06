@@ -10,6 +10,9 @@ module Spree
                         spree_authorize! :update, spree_current_order, order_token
 
                         payment = spree_current_order.payments.checkout.first
+                        payment = spree_current_order.payments.processing.first unless payment
+                        payment = spree_current_order.payments.pending.first unless payment
+                        payment = spree_current_order.payments.failed.first unless payment
         
                         begin
                             raise 'There is no selected payment method' unless payment
