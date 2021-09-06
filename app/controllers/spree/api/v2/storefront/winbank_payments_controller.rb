@@ -94,12 +94,28 @@ module Spree
                         fields = params.require(:winbank_payment).permit!
 
                         winbank_payment = Spree::WinbankPayment.find_by(uuid: fields[:parameters])
+                        payment = winbank_payment.payment
+                        preferences = payment.payment_method.preferences
+
+                        hash_key = [
+                            payment.transaction_ticket,
+                            preferences[:pos_id],
+                            preferences[:acquirer_id],
+                            payment.number,
+                            winbank_payment[:approval_code],
+                            fields[:parameters],
+                            winbank_payment[:response_code],
+                            winbank_payment[:support_reference_id],
+                            winbank_payment[:auth_status],
+                            winbank_payment[:package_no],
+                            winbank_payment[:status_flag],
+                        ].join(';')
+
+                        secure_hash = OpenSSL::HMAC.hexdigest('SHA256', payment.transaction_ticket, hash_key)
+
+                        puts secure_hash.upcase, fields[:hash_key]
 
                         if winbank_payment.update(winbank_payment_params('success'))
-                            # order = winbank_payment.payment.order
-
-                            # complete_service.call(order: order)
-
                             render json: {ok: true}
                         else
                             render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
@@ -110,8 +126,8 @@ module Spree
                     def winbank_payment_params(state)
                         if state == 'success'
                             params.require(:winbank_payment)
-                                .permit(:support_reference_id , :merchant_reference, :result_code, :result_description,
-                                        :status_flag, :approval_code, :package_no, :auth_status, :transaction_id)
+                                .permit(:support_reference_id , :merchant_reference, :status_flag, :response_code, 
+                                    :response_description, :approval_code, :package_no, :auth_status, :transaction_id)
                         else
                             params.require(:winbank_payment)
                                 .permit(:support_reference_id , :merchant_reference, :result_code, :result_description)
