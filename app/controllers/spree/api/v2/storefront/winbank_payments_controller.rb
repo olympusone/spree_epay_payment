@@ -91,11 +91,11 @@ module Spree
                     end
 
                     def success
-                        fields = winbank_payment_params('success')
+                        fields = params.require(:winbank_payment).permit!
 
                         winbank_payment = Spree::WinbankPayment.find_by(uuid: fields[:parameters])
 
-                        if winbank_payment.update(fields)
+                        if winbank_payment.update(winbank_payment_params('success'))
                             # order = winbank_payment.payment.order
 
                             # complete_service.call(order: order)
@@ -111,10 +111,10 @@ module Spree
                         if state == 'success'
                             params.require(:winbank_payment)
                                 .permit(:support_reference_id , :merchant_reference, :result_code, :result_description,
-                                        :status_flag, :approval_code, :package_no, :auth_status, :parameters)
+                                        :status_flag, :approval_code, :package_no, :auth_status)
                         else
                             params.require(:winbank_payment)
-                                .permit(:support_reference_id , :merchant_reference, :result_code, :result_description, :parameters)
+                                .permit(:support_reference_id , :merchant_reference, :result_code, :result_description)
                         end
                     end
                 end
