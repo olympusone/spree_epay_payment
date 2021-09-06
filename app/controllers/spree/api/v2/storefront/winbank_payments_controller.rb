@@ -96,6 +96,10 @@ module Spree
                         winbank_payment = Spree::WinbankPayment.find_by(uuid: fields[:parameters])
 
                         if winbank_payment.update(fields)
+                            order = winbank_payment.payment.order
+                            
+                            complete_service.call(order: order)
+
                             render json: {ok: true}
                         else
                             render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
