@@ -113,9 +113,9 @@ module Spree
 
                         secure_hash = OpenSSL::HMAC.hexdigest('SHA256', winbank_payment.transaction_ticket, hash_key)
 
-                        puts hash_key, secure_hash.upcase, fields[:hash_key]
-
-                        if winbank_payment.update(winbank_payment_params('success'))
+                        if secure_hash.upcase != fields[:hash_key]
+                            render json: {ok: false, error: "Hash Key is not correct"}, status: 400
+                        elsif winbank_payment.update(winbank_payment_params('success'))
                             render json: {ok: true}
                         else
                             render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
