@@ -79,11 +79,11 @@ module Spree
                     end
 
                     def failure
-                        fields = winbank_payment_params('failure')
+                        fields = params.require(:winbank_payment).permit!
 
-                        winbank_payment = Spree::WinbankPayment.find_by(uuid: fileds[:merchant_reference])
+                        winbank_payment = Spree::WinbankPayment.find_by(uuid: fields[:parameters])
 
-                        if winbank_payment.update(fields)
+                        if winbank_payment.update(winbank_payment_params('failure'))
                             render json: {ok: true}
                         else
                             render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
