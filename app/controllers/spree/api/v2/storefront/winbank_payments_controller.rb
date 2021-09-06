@@ -85,7 +85,7 @@ module Spree
 
                         winbank_payment = Spree::WinbankPayment.find_by(uuid: fields[:parameters])
                         
-                        payment.failure
+                        winbank_payment.payment.failure
 
                         if winbank_payment.update(winbank_payment_params('failure'))
                             render json: {ok: true}
