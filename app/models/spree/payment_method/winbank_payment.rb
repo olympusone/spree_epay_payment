@@ -27,15 +27,5 @@ module Spree
       def source_required?
         false
       end
-
-      # def purchase(money_in_cents, source, gateway_options)
-      #   puts 'ppppppp', money_in_cents, source, gateway_options
-      #   ActiveMerchant::Billing::Response.new(true, "", {}, {})
-      # end
-  
-      # def authorize(money_in_cents, source, gateway_options)
-      #   puts 'aaaaaaaaaaaaa', money_in_cents, source, gateway_options
-      #   ActiveMerchant::Billing::Response.new(true, "", {}, {})
-      # end
     end
 end
