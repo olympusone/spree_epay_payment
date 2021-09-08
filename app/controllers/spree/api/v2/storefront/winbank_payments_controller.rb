@@ -9,10 +9,7 @@ module Spree
                     def create
                         spree_authorize! :update, spree_current_order, order_token
 
-                        payment = spree_current_order.payments.checkout.first
-                        payment = spree_current_order.payments.processing.first unless payment
-                        payment = spree_current_order.payments.pending.first unless payment
-                        payment = spree_current_order.payments.failed.first unless payment
+                        payment = spree_current_order.payments.valid.find{|p| p.state != 'void'}
         
                         begin
                             raise 'There is no active payment method' unless payment
