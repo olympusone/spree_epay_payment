@@ -69,7 +69,7 @@ module Spree
                                     uuid: uuid
                                 )
 
-                                payment.started_processing
+                                # payment.started_processing
                                 
                                 render json: {code: result_code[1].to_i}
                             else
