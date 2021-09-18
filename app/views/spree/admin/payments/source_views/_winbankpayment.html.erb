@@ -1,48 +1,38 @@
 <div class="table-responsive">
     <table class="table table-condensed table-bordered">
-        <tr>
-        <th width="30%"><%= t('activerecord.attributes.spree/winbank_payment.support_reference_id') %>:</th>
-        <td><%= payment.winbank_payment.support_reference_id %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.merchant_reference') %>:</th>
-        <td><%= payment.winbank_payment.merchant_reference %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.status_flag') %>:</th>
-        <td><%= payment.winbank_payment.status_flag %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.result_code') %>:</th>
-        <td><%= payment.winbank_payment.result_code %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.result_description') %>:</th>
-        <td><%= payment.winbank_payment.result_description %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.response_code') %>:</th>
-        <td><%= payment.winbank_payment.response_code %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.response_description') %>:</th>
-        <td><%= payment.winbank_payment.response_description %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.approval_code') %>:</th>
-        <td><%= payment.winbank_payment.approval_code %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.package_no') %>:</th>
-        <td><%= payment.winbank_payment.package_no %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.auth_status') %>:</th>
-        <td><%= payment.winbank_payment.auth_status %></td>
-        </tr>
-        <tr>
-        <th><%= t('activerecord.attributes.spree/winbank_payment.transaction_id') %>:</th>
-        <td><%= payment.winbank_payment.transaction_id %></td>
-        </tr>
+    <thead>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.support_reference_id') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.merchant_reference') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.status_flag') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.result_code') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.result_description') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.response_code') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.response_description') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.approval_code') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.package_no') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.auth_status') %></th>
+    <th><%= t('activerecord.attributes.spree/winbank_payment.transaction_id') %></th>
+    <th><%= Spree.t(:created_at) %></th>
+    <th><%= Spree.t(:updated_at) %></th>
+    </thead>
+    <tbody>
+        <% @payment.winbank_payments.each do |winbank_payment| %>
+            <tr>
+                <td><%= winbank_payment.support_reference_id %></td>
+                <td><%= winbank_payment.merchant_reference %></td>
+                <td><%= winbank_payment.status_flag %></td>
+                <td><%= winbank_payment.result_code %></td>
+                <td><%= winbank_payment.result_description %></td>
+                <td><%= winbank_payment.response_code %></td>
+                <td><%= winbank_payment.response_description %></td>
+                <td><%= winbank_payment.approval_code %></td>
+                <td><%= winbank_payment.package_no %></td>
+                <td><%= winbank_payment.auth_status %></td>
+                <td><%= winbank_payment.transaction_id %></td>
+                <td><%= winbank_payment.created_at %></td>
+                <td><%= winbank_payment.updated_at %></td>
+            <tr>
+        <% end %>
+    </tbody>
     </table>
 </div>
