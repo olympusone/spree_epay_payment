@@ -29,8 +29,8 @@
                 <td><%= winbank_payment.package_no %></td>
                 <td><%= winbank_payment.auth_status %></td>
                 <td><%= winbank_payment.transaction_id %></td>
-                <td><%= winbank_payment.created_at %></td>
-                <td><%= winbank_payment.updated_at %></td>
+                <td><%= winbank_payment.created_at.strftime('DD-MM-YYYY HH:mm') %></td>
+                <td><%= winbank_payment.updated_at.strftime('DD-MM-YYYY HH:mm') %></td>
             <tr>
         <% end %>
     </tbody>
