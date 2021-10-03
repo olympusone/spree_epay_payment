@@ -1,6 +1,6 @@
 # SpreeWinbankPayment
 
-Introduction goes here.
+You can accept WinBank Piraeus Bank through ePOS payments
 
 ## Installation
 
@@ -57,4 +57,4 @@ If you'd like to contribute, please take a look at the
 [instructions](CONTRIBUTING.md) for installing dependencies and crafting a good
 pull request.
 
-Copyright (c) 2021 [name of extension creator], released under the New BSD License
+Copyright (c) 2021 OlympusOne, released under the New BSD License

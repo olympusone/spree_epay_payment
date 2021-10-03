@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_winbank_payment'
   s.version     = SpreeWinbankPayment.version
-  s.summary     = 'Add extension summary here'
-  s.description = 'Add (optional) extension description here'
+  s.summary     = 'Spree Winbank Payment'
+  s.description = ''
   s.required_ruby_version = '>= 2.7.3'
 
   s.author    = 'OlympusOne'
