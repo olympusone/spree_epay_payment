@@ -9,10 +9,6 @@ module SpreeWinbankPayment
       g.test_framework :rspec
     end
 
-    config.after_initialize do
-      Spree::Api::Dependencies.storefront_payment_method_serializer = "PaymentMethodSerializer"
-    end
-
     initializer 'spree.register.payment_methods', after: :after_initialize do |_app|
       _app.config.spree.payment_methods << Spree::PaymentMethod::WinbankPayment
     end
