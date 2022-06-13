@@ -6,6 +6,9 @@ module Spree::PaymentMethodDecorator
         base.preference :user_name, :string
         base.preference :password, :string
         base.preference :new_ticket_url, :string
+
+        base.preference :confirm_url, :string
+        base.preference :cancel_url, :string
     end
 
     protected
