@@ -18,8 +18,6 @@ module Spree
                                 raise 'Order has not WinbankPayment'
                             end
                             
-                            url = 'https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx'
-
                             preferences = payment.payment_method.preferences
                             raise 'There is no preferences on payment methods' unless preferences
 
@@ -51,7 +49,7 @@ module Spree
                                 </soap12:Envelope>]
 
                             response = Net::HTTP.post(
-                                URI(url),
+                                URI(preferences[:new_ticket_url]),
                                 message.strip,
                                 'Content-Type' => 'application/soap+xml; charset=UTF-8'
                             )

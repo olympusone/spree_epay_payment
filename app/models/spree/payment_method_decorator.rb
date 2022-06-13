@@ -5,7 +5,8 @@ module Spree::PaymentMethodDecorator
         base.preference :pos_id, :integer
         base.preference :user_name, :string
         base.preference :password, :string
-        base.preference :new_ticket_url, :string
+        base.preference :payment_url, :string, default: "https://paycenter.piraeusbank.gr/redirection/pay.aspx"
+        base.preference :new_ticket_url, :string, default: "https://paycenter.piraeusbank.gr/services/tickets/issuer.asmx"
 
         base.preference :confirm_url, :string
         base.preference :cancel_url, :string
@@ -13,7 +14,7 @@ module Spree::PaymentMethodDecorator
 
     protected
     def public_preference_keys
-        [:new_ticket_url, :acquirer_id, :merchant_id, :pos_id, :user_name]
+        [:payment_url, :acquirer_id, :merchant_id, :pos_id, :user_name]
     end
 end
   
