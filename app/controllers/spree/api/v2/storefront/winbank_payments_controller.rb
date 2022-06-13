@@ -10,6 +10,8 @@ module Spree
                         spree_authorize! :update, spree_current_order, order_token
 
                         payment = spree_current_order.payments.valid.find{|p| p.state != 'void'}
+
+                        render json: payment and return
         
                         begin
                             raise 'There is no active payment method' unless payment
