@@ -69,7 +69,7 @@ module Spree
                                     uuid: uuid
                                 )
                                 
-                                render json: {code: result_code[1].to_i}
+                                render json: {code: result_code[1].to_i, merchant_reference: payment.number}
                             else
                                 render_error_payload(result_description[1])
                             end
@@ -86,7 +86,7 @@ module Spree
                         winbank_payment.payment.update(response_code: fields[:support_reference_id])
                         winbank_payment.payment.failure
 
-                        if winbank_payment.update(winbank_payment_params('failure'))
+                        if winbank_payment.update(winbank_payment_params)
                             render json: {ok: true}
                         else
                             render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
@@ -98,29 +98,32 @@ module Spree
 
                         winbank_payment = Spree::WinbankPayment.find_by(uuid: fields[:parameters])
                         payment = winbank_payment.payment
-                        preferences = payment.payment_method.preferences
 
-                        hash_key = [
-                            winbank_payment.transaction_ticket,
-                            preferences[:pos_id],
-                            preferences[:acquirer_id],
-                            payment.number,
-                            fields[:approval_code],
-                            fields[:parameters],
-                            fields[:response_code],
-                            fields[:support_reference_id],
-                            fields[:auth_status],
-                            fields[:package_no],
-                            fields[:status_flag],
-                        ].join(';')
-
-                        secure_hash = OpenSSL::HMAC.hexdigest('SHA256', winbank_payment.transaction_ticket, hash_key)
-
-                        if winbank_payment.update(winbank_payment_params('success'))
+                        if winbank_payment.update(winbank_payment_params)
                             payment.update(response_code: fields[:support_reference_id])
+
+                            preferences = payment.payment_method.preferences
+                            raise 'There is no preferences on payment methods' unless preferences
+
+                            hash_key = [
+                                winbank_payment.transaction_ticket,
+                                preferences[:pos_id],
+                                preferences[:acquirer_id],
+                                payment.number,
+                                fields[:approval_code],
+                                fields[:parameters],
+                                fields[:response_code],
+                                fields[:support_reference_id],
+                                fields[:auth_status],
+                                fields[:package_no],
+                                fields[:status_flag],
+                            ].join(';')
+
+                            secure_hash = OpenSSL::HMAC.hexdigest('SHA256', winbank_payment.transaction_ticket, hash_key)
 
                             if secure_hash.upcase === fields[:hash_key]
                                 payment.complete
+                                complete_service.call(order: payment.order)
 
                                 render json: {ok: true}
                             else
@@ -131,21 +134,21 @@ module Spree
                         else
                             payment.failure
                             
-                            render json: {ok: false, errors: winbank_payment.errors.full_messages}, status: 400
-                        end
+                            render json: {ok: false, errors: cardlink_payment.errors.full_messages}, status: 400
+                        end                            
                     end
 
                     private
-                    def winbank_payment_params(state)
-                        if state == 'success'
+                    def winbank_payment_params
                             params.require(:winbank_payment)
                                 .permit(:support_reference_id , :merchant_reference, :status_flag, :response_code, 
-                                    :response_description, :approval_code, :package_no, :auth_status, :transaction_id)
-                        else
-                            params.require(:winbank_payment)
-                                .permit(:support_reference_id , :merchant_reference, 
-                                    :result_code, :result_description, :response_code, :response_description)
-                        end
+                                    :response_description, :approval_code, :package_no, :auth_status, :transaction_id,
+                                    :result_code, :result_description)
+                       
+                    end
+
+                    def complete_service
+                        Spree::Api::Dependencies.storefront_checkout_complete_service.constantize
                     end
                 end
             end
