@@ -30,17 +30,17 @@ module Spree
                                 <soap12:Body>
                                     <IssueNewTicket xmlns="http://piraeusbank.gr/paycenter/redirection">
                                     <Request>
-                                        <Username>#{preferences[:user_name]}</Username>
-                                        <Password>#{password}</Password>
+                                        <AcquirerId>#{preferences[:acquirer_id]}</AcquirerId>
                                         <MerchantId>#{preferences[:merchant_id]}</MerchantId>
                                         <PosId>#{preferences[:pos_id]}</PosId>
-                                        <AcquirerId>#{preferences[:acquirer_id]}</AcquirerId>
-                                        <MerchantReference>#{payment.number}</MerchantReference>
+                                        <Username>#{preferences[:user_name]}</Username>
+                                        <Password>#{password}</Password>
                                         <RequestType>02</RequestType>
-                                        <ExpirePreauth>0</ExpirePreauth>
-                                        <Amount>#{payment.amount}</Amount>
                                         <CurrencyCode>978</CurrencyCode>
+                                        <MerchantReference>#{payment.number}</MerchantReference>
+                                        <Amount>#{payment.amount}</Amount>
                                         <Installments>0</Installments>
+                                        <ExpirePreauth>0</ExpirePreauth>
                                         <Bnpl>0</Bnpl>
                                         <Parameters>#{uuid}</Parameters>
                                     </Request>
