@@ -72,6 +72,7 @@ module Spree
                                 render_error_payload(result_description[1])
                             end
                         rescue => exception
+                            logger.error(exception.to_s)
                             render_error_payload(exception.to_s)
                         end
                     end
