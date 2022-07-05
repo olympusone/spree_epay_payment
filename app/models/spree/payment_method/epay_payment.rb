@@ -1,5 +1,5 @@
 module Spree
-    class PaymentMethod::WinbankPayment < ::Spree::PaymentMethod
+    class PaymentMethod::EpayPayment < ::Spree::PaymentMethod
       def actions
         %w{capture void}
       end

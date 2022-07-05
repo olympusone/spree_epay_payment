@@ -1,8 +1,8 @@
-module SpreeWinbankPayment
+module SpreeEpayPayment
   class Engine < Rails::Engine
     require 'spree/core'
     isolate_namespace Spree
-    engine_name 'spree_winbank_payment'
+    engine_name 'spree_epay_payment'
 
     # use rspec for tests
     config.generators do |g|
@@ -10,11 +10,11 @@ module SpreeWinbankPayment
     end
 
     initializer 'spree.register.payment_methods', after: :after_initialize do |_app|
-      _app.config.spree.payment_methods << Spree::PaymentMethod::WinbankPayment
+      _app.config.spree.payment_methods << Spree::PaymentMethod::EpayPayment
     end
 
-    initializer 'spree_winbank_payment.environment', before: :load_config_initializers do |_app|
-      SpreeWinbankPayment::Config = SpreeWinbankPayment::Configuration.new
+    initializer 'spree_epay_payment.environment', before: :load_config_initializers do |_app|
+      SpreeEpayPayment::Config = SpreeEpayPayment::Configuration.new
     end
 
     def self.activate

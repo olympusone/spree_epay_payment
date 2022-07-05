@@ -1,5 +1,5 @@
 module Spree
-    class WinbankPayment < Spree::Base
+    class EpayPayment < Spree::Base
         validates :transaction_ticket, presence: true, uniqueness: {case_sensitive: false}
         validates :support_reference_id, presence: true, uniqueness: {case_sensitive: false}, on: :update
     

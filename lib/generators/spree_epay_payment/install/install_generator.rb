@@ -1,10 +1,10 @@
-module SpreeWinbankPayment
+module SpreeEpayPayment
   module Generators
     class InstallGenerator < Rails::Generators::Base
       class_option :migrate, type: :boolean, default: true
 
       def add_migrations
-        run 'bundle exec rake railties:install:migrations FROM=spree_winbank_payment'
+        run 'bundle exec rake railties:install:migrations FROM=spree_epay_payment'
       end
 
       def run_migrations

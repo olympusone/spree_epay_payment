@@ -2,7 +2,7 @@ module Spree
     module Api
         module V2
             module Storefront
-                class WinbankPaymentsController < ::Spree::Api::V2::BaseController
+                class EpayPaymentsController < ::Spree::Api::V2::BaseController
                     include Spree::Api::V2::Storefront::OrderConcern
                     before_action :ensure_order, only: :create
                     
@@ -14,8 +14,8 @@ module Spree
                         begin
                             raise 'There is no active payment method' unless payment
 
-                            unless payment.payment_method.type === "Spree::PaymentMethod::WinbankPayment"
-                                raise 'Order has not WinbankPayment'
+                            unless payment.payment_method.type === "Spree::PaymentMethod::EpayPayment"
+                                raise 'Order has not EpayPayment'
                             end
                             
                             preferences = payment.payment_method.preferences
@@ -62,7 +62,7 @@ module Spree
                             result_timestamp = body.match(/<Timestamp>(\S+)<\/Timestamp>/)
                             
                             if result_code && result_code[1].to_i == 0
-                                payment.winbank_payments.create!(
+                                payment.epay_payments.create!(
                                     transaction_ticket: result_tran_ticket[1],
                                     uuid: uuid
                                 )
@@ -79,10 +79,10 @@ module Spree
 
                     def failure
                         begin
-                            winbank_payment = Spree::WinbankPayment.find_by(uuid: params[:Parameters])
-                            raise 'Payment not found' unless winbank_payment
+                            epay_payment = Spree::EpayPayment.find_by(uuid: params[:Parameters])
+                            raise 'Payment not found' unless epay_payment
 
-                            payment = winbank_payment.payment
+                            payment = epay_payment.payment
 
                             preferences = payment.payment_method.preferences
                             raise 'There is no preferences on payment methods' unless preferences
@@ -90,7 +90,7 @@ module Spree
                             payment.update(response_code: params[:SupportReferenceID])
                             payment.failure
 
-                            winbank_payment.update(
+                            epay_payment.update(
                                 support_reference_id: params[:SupportReferenceID],
                                 merchant_reference: params[:MerchantReference],
                                 result_code: params[:ResultCode],
@@ -110,16 +110,16 @@ module Spree
 
                     def success
                         begin
-                            winbank_payment = Spree::WinbankPayment.find_by(uuid: params[:Parameters])
-                            raise 'Payment not found' unless winbank_payment
+                            epay_payment = Spree::EpayPayment.find_by(uuid: params[:Parameters])
+                            raise 'Payment not found' unless epay_payment
 
-                            payment = winbank_payment.payment
+                            payment = epay_payment.payment
 
                             preferences = payment.payment_method.preferences
                             raise 'There is no preferences on payment methods' unless preferences
 
                             hash_key = [
-                                winbank_payment.transaction_ticket,
+                                epay_payment.transaction_ticket,
                                 preferences[:pos_id],
                                 preferences[:acquirer_id],
                                 payment.number,
@@ -132,11 +132,11 @@ module Spree
                                 fields[:StatusFlag],
                             ].join(';')
 
-                            secure_hash = OpenSSL::HMAC.hexdigest('SHA256', winbank_payment.transaction_ticket, hash_key)
+                            secure_hash = OpenSSL::HMAC.hexdigest('SHA256', epay_payment.transaction_ticket, hash_key)
 
                             raise "Hash Key is given!" unless secure_hash.upcase === params[:HashKey]
 
-                            winbank_payment.update(
+                            epay_payment.update(
                                 support_reference_id: SupportReferenceID,
                                 merchant_reference: MerchantReference,
                                 status_flag: StatusFlag,

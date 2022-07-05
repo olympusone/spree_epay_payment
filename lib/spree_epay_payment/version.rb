@@ -1,9 +1,9 @@
-module SpreeWinbankPayment
+module SpreeEpayPayment
   VERSION = '1.0.0'.freeze
 
   module_function
 
-  # Returns the version of the currently loaded SpreeWinbankPayment as a
+  # Returns the version of the currently loaded SpreeEpayPayment as a
   # <tt>Gem::Version</tt>.
   def version
     Gem::Version.new VERSION

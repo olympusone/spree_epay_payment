@@ -1,38 +1,38 @@
 <div class="table-responsive">
-    <table class="text-nowrap table table-condensed table-bordered">
+  <table class="text-nowrap table table-condensed table-bordered">
     <thead>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.support_reference_id') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.merchant_reference') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.status_flag') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.result_code') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.result_description') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.response_code') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.response_description') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.approval_code') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.package_no') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.auth_status') %></th>
-    <th><%= t('activerecord.attributes.spree/winbank_payment.transaction_id') %></th>
-    <th><%= Spree.t(:created_at) %></th>
-    <th><%= Spree.t(:updated_at) %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.support_reference_id') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.merchant_reference') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.status_flag') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.result_code') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.result_description') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.response_code') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.response_description') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.approval_code') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.package_no') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.auth_status') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.transaction_id') %></th>
+      <th><%= Spree.t(:created_at) %></th>
+      <th><%= Spree.t(:updated_at) %></th>
     </thead>
     <tbody>
-        <% @payment.winbank_payments.each do |winbank_payment| %>
-            <tr>
-                <td><%= winbank_payment.support_reference_id %></td>
-                <td><%= winbank_payment.merchant_reference %></td>
-                <td><%= winbank_payment.status_flag %></td>
-                <td><%= winbank_payment.result_code %></td>
-                <td><%= winbank_payment.result_description %></td>
-                <td><%= winbank_payment.response_code %></td>
-                <td><%= winbank_payment.response_description %></td>
-                <td><%= winbank_payment.approval_code %></td>
-                <td><%= winbank_payment.package_no %></td>
-                <td><%= winbank_payment.auth_status %></td>
-                <td><%= winbank_payment.transaction_id %></td>
-                <td><%= winbank_payment.created_at.strftime('%d-%m-%Y %H:%M') %></td>
-                <td><%= winbank_payment.updated_at.strftime('%d-%m-%Y %H:%M') %></td>
-            <tr>
-        <% end %>
-    </tbody>
-    </table>
-</div>
+      <% @payment.epay_payments.each do |epay_payment| %>
+        <tr>
+          <td><%= epay_payment.support_reference_id %></td>
+          <td><%= epay_payment.merchant_reference %></td>
+          <td><%= epay_payment.status_flag %></td>
+          <td><%= epay_payment.result_code %></td>
+          <td><%= epay_payment.result_description %></td>
+          <td><%= epay_payment.response_code %></td>
+          <td><%= epay_payment.response_description %></td>
+          <td><%= epay_payment.approval_code %></td>
+          <td><%= epay_payment.package_no %></td>
+          <td><%= epay_payment.auth_status %></td>
+          <td><%= epay_payment.transaction_id %></td>
+          <td><%= epay_payment.created_at.strftime('%d-%m-%Y %H:%M') %></td>
+          <td><%= epay_payment.updated_at.strftime('%d-%m-%Y %H:%M') %></td>
+          <tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>

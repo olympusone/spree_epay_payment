@@ -4,7 +4,7 @@
 el:
   activerecord:
     attributes:
-      spree/winbank_payment:
+      spree/epay_payment:
         support_reference_id: Reference ID
         merchant_reference: Merchant Reference
         status_flag: Status Flag

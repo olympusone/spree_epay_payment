@@ -1,5 +1,5 @@
 require 'spree_api'
 require 'spree_core'
 require 'spree_extension'
-require 'spree_winbank_payment/engine'
-require 'spree_winbank_payment/version'
+require 'spree_epay_payment/engine'
+require 'spree_epay_payment/version'
