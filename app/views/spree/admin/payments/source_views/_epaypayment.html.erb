@@ -11,6 +11,7 @@
       <th><%= t('activerecord.attributes.spree/epay_payment.approval_code') %></th>
       <th><%= t('activerecord.attributes.spree/epay_payment.package_no') %></th>
       <th><%= t('activerecord.attributes.spree/epay_payment.auth_status') %></th>
+      <th><%= t('activerecord.attributes.spree/epay_payment.transaction_ticket') %></th>
       <th><%= t('activerecord.attributes.spree/epay_payment.transaction_id') %></th>
       <th><%= Spree.t(:created_at) %></th>
       <th><%= Spree.t(:updated_at) %></th>
@@ -29,6 +30,7 @@
           <td><%= epay_payment.package_no %></td>
           <td><%= epay_payment.auth_status %></td>
           <td><%= epay_payment.transaction_id %></td>
+          <td><%= epay_payment.transaction_ticket %></td>
           <td><%= epay_payment.created_at.strftime('%d-%m-%Y %H:%M') %></td>
           <td><%= epay_payment.updated_at.strftime('%d-%m-%Y %H:%M') %></td>
           <tr>
