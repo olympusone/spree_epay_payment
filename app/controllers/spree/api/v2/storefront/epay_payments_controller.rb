@@ -97,7 +97,6 @@ module Spree
                                 result_description: params[:ResultDescription],
                                 response_code: params[:ResponseCode],
                                 response_description: params[:ResponseDescription],
-                                parameters: params[:Parameters],
                             )
 
                             redirect_to URI::join(
@@ -145,7 +144,6 @@ module Spree
                                 approval_code: ApprovalCode,
                                 package_no: PackageNo,
                                 auth_status: AuthStatus,
-                                parameters: Parameters,
                                 result_code: ResultCode,
                                 result_description: ResultDescription,
                                 transaction_id: TransactionId,
