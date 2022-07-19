@@ -1,5 +1,7 @@
 # SpreeEpayPayment
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/70ef3a006b54b57fc9e3/maintainability)](https://codeclimate.com/github/olympusone/spree_epay_payment/maintainability)
+
 You can accept Epay Piraeus Bank through ePOS payments
 
 ## Installation
