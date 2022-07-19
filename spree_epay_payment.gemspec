@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.name        = 'spree_epay_payment'
   s.version     = SpreeEpayPayment.version
   s.summary     = 'Spree Epay Payment'
-  s.description = ''
+  s.description = 'You can accept Epay Piraeus Bank through ePOS payments'
   s.required_ruby_version = '>= 2.5'
 
   s.author       = 'OlympusOne'
